@@ -4,7 +4,7 @@
 // but you don't so you're going to write it from scratch:
 
 var stringifyJSON = function(obj) {
-		console.log(JSON.stringify(obj));
+	console.log(JSON.stringify(obj));
 	var type = typeof obj;
 	if(obj == null || type == 'boolean' || type == 'number'){
 		return ""+obj;
@@ -33,10 +33,12 @@ var stringifyJSONHelper = function(obj, results) {
 		return "["+results +"]";
 	} else {
 		for(var key in obj){
-			if(obj[key] instanceof Object){
-				results.push('"' + key + '":' + stringifyJSONHelper(obj[key],[]));
-			} else {
-				results.push('"' + key + '":' + (typeof obj[key] == 'string' ? '"'+obj[key]+'"' : ""+obj[key]));
+			if(typeof obj[key] != 'function' && obj[key] !== undefined){
+				if(obj[key] instanceof Object){
+					results.push('"' + key + '":' + stringifyJSONHelper(obj[key],[]));
+				} else {
+					results.push('"' + key + '":' + (typeof obj[key] == 'string' ? '"'+obj[key]+'"' : ""+obj[key]));
+				}
 			}
 		}
 		return "{" + results + "}";
