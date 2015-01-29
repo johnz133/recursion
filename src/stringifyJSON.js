@@ -4,5 +4,9 @@
 // but you don't so you're going to write it from scratch:
 
 var stringifyJSON = function(obj) {
-  // your code goes here
+		console.log(JSON.stringify(obj));
+	var type = typeof obj;
+	if(obj == null || type == 'boolean' || type == 'number'){
+		return ""+obj;
+	}
 };
