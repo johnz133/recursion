@@ -12,4 +12,22 @@ var stringifyJSON = function(obj) {
 	if(typeof obj == "string"){
 		return '"'+obj+'"';
 	}
+	if(obj instanceof Object){
+		return stringifyJSONHelper(obj, []);
+	}
+};
+
+var stringifyJSONHelper = function(obj, results) {
+	for(var i = 0; i < obj.length; i++){
+		if(typeof obj[i] == 'string'){
+			results.push('"'+obj[i]+'"');
+		}
+		else if(obj[i] instanceof Object){
+			results.push(stringifyJSONHelper(obj[i], []));
+		}
+		else {
+			results.push(obj[i]);
+		}
+	}
+	return "["+results +"]";
 };
