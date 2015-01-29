@@ -18,16 +18,27 @@ var stringifyJSON = function(obj) {
 };
 
 var stringifyJSONHelper = function(obj, results) {
-	for(var i = 0; i < obj.length; i++){
-		if(typeof obj[i] == 'string'){
-			results.push('"'+obj[i]+'"');
+	if(obj instanceof Array){
+		for(var i = 0; i < obj.length; i++){
+			if(typeof obj[i] == 'string'){
+				results.push('"'+obj[i]+'"');
+			}
+			else if(obj[i] instanceof Object){
+				results.push(stringifyJSONHelper(obj[i], []));
+			}
+			else {
+				results.push(obj[i]);
+			}
 		}
-		else if(obj[i] instanceof Object){
-			results.push(stringifyJSONHelper(obj[i], []));
+		return "["+results +"]";
+	} else {
+		for(var key in obj){
+			if(obj[key] instanceof Object){
+				results.push('"' + key + '":' + stringifyJSONHelper(obj[key],[]));
+			} else {
+				results.push('"' + key + '":' + (typeof obj[key] == 'string' ? '"'+obj[key]+'"' : ""+obj[key]));
+			}
 		}
-		else {
-			results.push(obj[i]);
-		}
+		return "{" + results + "}";
 	}
-	return "["+results +"]";
-};
+}
