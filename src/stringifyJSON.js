@@ -9,4 +9,7 @@ var stringifyJSON = function(obj) {
 	if(obj == null || type == 'boolean' || type == 'number'){
 		return ""+obj;
 	}
+	if(typeof obj == "string"){
+		return '"'+obj+'"';
+	}
 };
